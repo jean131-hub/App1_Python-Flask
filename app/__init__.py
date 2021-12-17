@@ -22,7 +22,13 @@ def create_app(config):
     app.config.from_object(config)
 
     csrf.init_app(app)
-    bootstrap.init_app(app)
+    
+    if not app.config.get('TEST', False):
+        bootstrap.init_app(app)
+
+    app.app_context().push()    #Lanzamos contexto de la aplicación, 
+                                #asi corregir el error del los unitest
+
     login_manager.init_app(app)
     login_manager.login_view = '.login' #url_for
     login_manager.login_message = LOGIN_REQUIRED
@@ -30,7 +36,6 @@ def create_app(config):
     mail.init_app(app)
 
     app.register_blueprint(page)
-
                                                                  
     with app.app_context(): #Creamos un administrador de contexto.Nos permite administrar recursos
         db.init_app(app)

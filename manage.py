@@ -15,10 +15,10 @@ if __name__ == '__main__':
 
     manager.add_command('shell', Shell(make_context=make_shell_context))
 
-    @manager.command #El nombre de la función decorada es el nombre del comando
+    @manager.command                                    #El nombre de la función decorada es el nombre del comando
     def test():
         import unittest
         tests = unittest.TestLoader().discover('tests') #Cargamos los casos de prueba del módulo tests
-        unittest.TextTestRunner().run(tests)    #Ejecutamos las pruebas
+        unittest.TextTestRunner().run(tests)            #Ejecutamos las pruebas
 
     manager.run()

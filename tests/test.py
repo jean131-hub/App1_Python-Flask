@@ -1,12 +1,29 @@
 import unittest
 
+from app import create_app
+from app import db, User, Task
+from config import config
+
 class DemoTestCase(unittest.TestCase):
 
     def setUp(self):
-        pass
-    
+        config_class = config['test']
+        self.app = create_app(config_class)
+
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+
+        self.id = 1
+
     def tearDown(self):
-        pass
+        db.session.remove()
+        db.drop_all()
+
+        #self.app_context.pop()
 
     def test_demo(self):
-        self.assertTrue( 1 == 1)
+        self.assertTrue(1 == 1)
+
+    def test_user_exists(self):
+        user = User.get_by_id(self.id)
+        self.assertTrue(user is None)

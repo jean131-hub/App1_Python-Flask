@@ -14,9 +14,15 @@ class DevelopmentConfig(Config):
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'jeanmartinez22782@gmail.com'
     MAIL_PASSWORD = config('MAIL_PASSWORD') #Variable de entorno
-                                                                     
+
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:JDmartinez97#@localhost/project_web_flask_test'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    TEST = True
+
 config = {
     'development':DevelopmentConfig,
-    'default':DevelopmentConfig
+    'default':DevelopmentConfig,
+    'test':TestConfig
 }
 
